@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velvet Tiger Leads</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Config Bar -->
+  <header class="config-bar">
+    <div class="config-bar__brand">
+      <span class="brand-icon">◈</span>
+      <span class="brand-name">VELVET TIGER LEADS</span>
+    </div>
+    <div class="config-bar__token">
+      <label for="apiKey" class="token-label">Apify Token</label>
+      <input type="password" id="apiKey" class="token-input" placeholder="apify_api_…" autocomplete="off">
+      <button id="saveKeyBtn" class="btn btn--sm btn--ghost" onclick="saveApiKey()">Save</button>
+      <span id="tokenBadge" class="token-badge hidden">✓ Saved</span>
+      <button id="clearKeyBtn" class="btn btn--sm btn--danger-ghost hidden" onclick="clearApiKey()">Clear</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Error Banner -->
+    <div id="errorBanner" class="error-banner hidden">
+      <span id="errorMsg"></span>
+      <button class="error-close" onclick="dismissError()">✕</button>
+    </div>
+
+    <!-- Search Form Card -->
+    <section class="card search-card">
+      <h1 class="card__title">Lead Generation</h1>
+      <p class="card__subtitle">Find decision-makers by industry and role via LinkedIn</p>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="sector" class="form-label">Industry / Sector</label>
+          <input type="text" id="sector" class="form-input" placeholder="e.g. fintech, healthcare, SaaS">
+        </div>
+        <div class="form-group">
+          <label for="jobRoles" class="form-label">Job Roles <span class="form-hint">(comma-separated)</span></label>
+          <input type="text" id="jobRoles" class="form-input" placeholder="e.g. CTO, CHRO, VP Sales">
+        </div>
+        <div class="form-group">
+          <label for="location" class="form-label">Location <span class="form-hint">(optional)</span></label>
+          <input type="text" id="location" class="form-input" placeholder="e.g. Singapore, London">
+        </div>
+        <div class="form-group">
+          <label for="maxResults" class="form-label">Max Results</label>
+          <input type="number" id="maxResults" class="form-input" value="25" min="1" max="100">
+        </div>
+      </div>
+
+      <button id="searchBtn" class="btn btn--primary btn--lg" onclick="startRun()">
+        <span class="btn-icon">⌕</span>
+        <span class="btn-label">Find Leads</span>
+        <span class="spinner hidden" id="btnSpinner"></span>
+      </button>
+
+      <p class="token-notice">Your API token is stored locally and sent only to api.apify.com</p>
+    </section>
+
+    <!-- Progress Panel -->
+    <section id="progressPanel" class="card progress-card hidden">
+      <div class="progress-header">
+        <span id="statusBadge" class="status-badge status-badge--running">● RUNNING</span>
+        <span id="runIdDisplay" class="run-id"></span>
+        <span id="elapsedTimer" class="elapsed-timer">00:00</span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+      <p class="progress-note" id="progressNote">Initialising actor run…</p>
+    </section>
+
+    <!-- Results Section -->
+    <section id="resultsSection" class="results-section hidden">
+      <div class="results-header">
+        <span id="resultCount" class="result-count">0 leads found</span>
+        <div class="results-actions">
+          <button class="btn btn--secondary" onclick="copyEmails()">Copy Emails</button>
+          <button class="btn btn--primary" onclick="exportCSV()">Export CSV</button>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table class="leads-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Full Name</th>
+              <th>Job Title</th>
+              <th>Company</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Location</th>
+              <th>LinkedIn</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
