@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Velvet Tiger Leads</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=DM+Mono:wght@300;400;500&family=Lora:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,19 +14,21 @@
   <!-- Config Bar -->
   <header class="config-bar">
     <div class="config-bar__brand">
-      <span class="brand-icon">◈</span>
-      <span class="brand-name">VELVET TIGER LEADS</span>
+      <span class="brand-mark">◈</span>
+      <div class="brand-text">
+        <span class="brand-name">Velvet Tiger</span>
+        <span class="brand-sub">LEADS INTELLIGENCE</span>
+      </div>
     </div>
     <div class="config-bar__token">
-      <label for="apiKey" class="token-label">Apify Token</label>
+      <label for="apiKey" class="token-label">APIFY TOKEN</label>
       <input type="password" id="apiKey" class="token-input" placeholder="apify_api_…" autocomplete="off">
-      <button id="saveKeyBtn" class="btn btn--sm btn--ghost" onclick="saveApiKey()">Save</button>
-      <span id="tokenBadge" class="token-badge hidden">✓ Saved</span>
-      <button id="clearKeyBtn" class="btn btn--sm btn--danger-ghost hidden" onclick="clearApiKey()">Clear</button>
+      <button id="saveKeyBtn" class="btn btn--sm btn--ghost" onclick="saveApiKey()">SAVE</button>
+      <span id="tokenBadge" class="token-badge hidden">✓ ACTIVE</span>
+      <button id="clearKeyBtn" class="btn btn--sm btn--ghost-danger hidden" onclick="clearApiKey()">REVOKE</button>
     </div>
   </header>
 
-  <!-- Main Content -->
   <main class="main">
 
     <!-- Error Banner -->
@@ -32,41 +37,55 @@
       <button class="error-close" onclick="dismissError()">✕</button>
     </div>
 
-    <!-- Search Form Card -->
-    <section class="card search-card">
-      <h1 class="card__title">Lead Generation</h1>
-      <p class="card__subtitle">Find decision-makers by industry and role via LinkedIn</p>
+    <!-- Search Section -->
+    <section class="search-section">
+      <div class="section-eyebrow anim-in" style="--delay:0.05s">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">INTELLIGENCE BRIEF</span>
+        <span class="eyebrow-line"></span>
+      </div>
+
+      <h1 class="section-title anim-in" style="--delay:0.15s">
+        Find Your<br><em>Targets</em>
+      </h1>
+
+      <p class="section-subtitle anim-in" style="--delay:0.22s">
+        Identify decision-makers by industry, role, and geography —<br>sourced from LinkedIn via Apify.
+      </p>
 
       <div class="form-grid">
-        <div class="form-group">
-          <label for="sector" class="form-label">Industry / Sector</label>
-          <input type="text" id="sector" class="form-input" placeholder="e.g. fintech, healthcare, SaaS">
+        <div class="form-group anim-in" style="--delay:0.30s">
+          <label for="sector" class="form-label">INDUSTRY / SECTOR</label>
+          <input type="text" id="sector" class="form-input" placeholder="fintech, healthcare, SaaS…">
         </div>
-        <div class="form-group">
-          <label for="jobRoles" class="form-label">Job Roles <span class="form-hint">(comma-separated)</span></label>
-          <input type="text" id="jobRoles" class="form-input" placeholder="e.g. CTO, CHRO, VP Sales">
+        <div class="form-group anim-in" style="--delay:0.35s">
+          <label for="jobRoles" class="form-label">JOB ROLES <span class="label-note">comma-separated</span></label>
+          <input type="text" id="jobRoles" class="form-input" placeholder="CTO, CHRO, VP Sales…">
         </div>
-        <div class="form-group">
-          <label for="location" class="form-label">Location <span class="form-hint">(optional)</span></label>
-          <input type="text" id="location" class="form-input" placeholder="e.g. Singapore, London">
+        <div class="form-group anim-in" style="--delay:0.40s">
+          <label for="location" class="form-label">LOCATION <span class="label-note">optional</span></label>
+          <input type="text" id="location" class="form-input" placeholder="Singapore, London…">
         </div>
-        <div class="form-group">
-          <label for="maxResults" class="form-label">Max Results</label>
+        <div class="form-group anim-in" style="--delay:0.45s">
+          <label for="maxResults" class="form-label">MAX RESULTS</label>
           <input type="number" id="maxResults" class="form-input" value="25" min="1" max="100">
         </div>
       </div>
 
-      <button id="searchBtn" class="btn btn--primary btn--lg" onclick="startRun()">
+      <button id="searchBtn" class="search-btn anim-in" style="--delay:0.52s" onclick="startRun()">
         <span class="btn-icon">⌕</span>
         <span class="btn-label">Find Leads</span>
         <span class="spinner hidden" id="btnSpinner"></span>
+        <span class="btn-arrow">→</span>
       </button>
 
-      <p class="token-notice">Your API token is stored locally and sent only to api.apify.com</p>
+      <p class="token-notice anim-in" style="--delay:0.58s">
+        Token transmitted exclusively to api.apify.com — never stored server-side
+      </p>
     </section>
 
     <!-- Progress Panel -->
-    <section id="progressPanel" class="card progress-card hidden">
+    <section id="progressPanel" class="progress-panel hidden">
       <div class="progress-header">
         <span id="statusBadge" class="status-badge status-badge--running">● RUNNING</span>
         <span id="runIdDisplay" class="run-id"></span>
@@ -81,7 +100,7 @@
     <!-- Results Section -->
     <section id="resultsSection" class="results-section hidden">
       <div class="results-header">
-        <span id="resultCount" class="result-count">0 leads found</span>
+        <span id="resultCount" class="result-count"></span>
         <div class="results-actions">
           <button class="btn btn--secondary" onclick="copyEmails()">Copy Emails</button>
           <button class="btn btn--primary" onclick="exportCSV()">Export CSV</button>
